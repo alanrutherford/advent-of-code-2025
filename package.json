@@ -1,0 +1,19 @@
+{
+  "name": "advent-of-code-2025",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:alanrutherford/advent-of-code-2025.git",
+  "author": "Alan Rutherford <alan@propelleraero.com.au>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "sh -c 'tsx ./src/${0}/index.ts'",
+    "make": "sh -c 'cp -r src/template src/${0}'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
