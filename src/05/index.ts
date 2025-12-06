@@ -1,5 +1,10 @@
 import partA from "./partA";
 import partB from "./partB";
-
+const startTimeA = performance.now();
 partA();
+const endTimeA = performance.now();
+console.log(`Part A took : ${endTimeA - startTimeA} ms`);
+const startTimeB = performance.now();
 partB();
+const endTimeB = performance.now();
+console.log(`Part B took: ${endTimeB - startTimeB} ms`);
