@@ -1,4 +1,3 @@
-import assert from "assert";
 import { readFileSync } from "fs";
 import { join } from "path";
 export function syncReadFile(filename: string) {
@@ -7,59 +6,34 @@ export function syncReadFile(filename: string) {
 }
 
 export default function partB(): void {
+  const input = syncReadFile("./input.txt").split("\n");
   const ops = syncReadFile("./input.txt")
     .split("\n")
     .pop()
     ?.trim()
-    .split(/\s+/);
-
-  const numOfDigits: number[] = [];
-  let thing = syncReadFile("./input.txt").split("\n").pop()?.split("");
-  assert(thing);
-  for (let i = 0; i <= thing.length; i++) {
-    if (thing[i + 1] !== " ") {
-      numOfDigits.push(i);
-    }
+    .split(/\s+/)
+    .reverse();
+  if (!ops) {
+    throw "Something went very wrong";
   }
-  const problems = syncReadFile("./input.txt")
-    .split("\n")
-    .map((elem) => elem.split(""));
-
-  const finalProblems: string[][] = [];
-  for (let j = 0; j < problems.length - 1; j++) {
-    for (let k = 0; k < numOfDigits.length - 2; k++) {
-      problems[j][numOfDigits[k]] = "-";
+  let total = 0;
+  let nums: number[] = [];
+  for (let i = 0; i <= input[0].length; i++) {
+    const num: string[] = [];
+    for (let j = 0; j < input.length - 1; j++) {
+      num.push(input[j].charAt(i));
     }
-    finalProblems.push(problems[j].join("").replace(/ /g, "*").split("-"));
-  }
-
-  assert(ops);
-  const matrix: string[][][] = [];
-  for (let j = 0; j < finalProblems[0].length; j++) {
-    let nums: string[] = [];
-    for (let i = 0; i < finalProblems.length; i++) {
-      nums.push(finalProblems[i][j]);
-    }
-
-    matrix.push(nums.map((elm) => elm.split("")));
-  }
-  let runningTotal = 0;
-  for (let i = 0; i < matrix.length; i++) {
-    const nums: number[] = [];
-    for (let j = 0; j < matrix[i][0].length; j++) {
-      let num = "";
-      for (let k = 0; k < matrix[i].length; k++) {
-        if (matrix[i][k][j] !== "*") {
-          num += matrix[i][k][j];
-        }
+    if (num.every((char) => char === " " || i === input[0].length)) {
+      const currentOp = ops.pop();
+      if (currentOp === "*") {
+        total += nums.reduce((a, b) => a * b);
+      } else {
+        total += nums.reduce((a, b) => a + b);
       }
-      nums.push(parseInt(num));
-    }
-    if (ops[i] === "*") {
-      runningTotal += nums.reduce((a, b) => a * b);
+      nums = [];
     } else {
-      runningTotal += nums.reduce((a, b) => a + b);
+      nums.push(parseInt(num.join("")));
     }
   }
-  console.log(`Part B: ${runningTotal}`);
+  console.log(`Part B:${total}`);
 }
