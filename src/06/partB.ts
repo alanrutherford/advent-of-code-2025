@@ -35,5 +35,5 @@ export default function partB(): void {
       nums.push(parseInt(num.join("")));
     }
   }
-  console.log(`Part B:${total}`);
+  console.log(`Part B: ${total}`);
 }
