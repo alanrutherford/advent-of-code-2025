@@ -13,15 +13,14 @@ export default function partA(): void {
       const [x, y, z] = line.split(",").map((num) => Number(num));
       return { x, y, z };
     });
-  const euclieanDistance = (from: Point, to: Point): number => {
+  const euclideanDistance = (from: Point, to: Point): number => {
     return Math.sqrt(
       (from.x - to.x) ** 2 + (from.y - to.y) ** 2 + (from.z - to.z) ** 2
     );
   };
 
   let circuits: Point[][] = [];
-  let smallestDistance: { from: Point; to: Point; distance: number } | null =
-    null;
+
   let distances: { from: Point; to: Point; distance: number }[] = [];
   const equalPoints = (a: Point, b: Point) => {
     return a.x === b.x && a.y === b.y && a.z === b.z;
@@ -83,12 +82,11 @@ export default function partA(): void {
       distances.push({
         from: input[i],
         to: input[j],
-        distance: euclieanDistance(input[i], input[j]),
+        distance: euclideanDistance(input[i], input[j]),
       });
     }
   }
   distances = distances.sort((a, b) => a.distance - b.distance);
-  console;
   for (let i = 0; i < 1000; i++) {
     addToCircuits(distances[i]);
   }

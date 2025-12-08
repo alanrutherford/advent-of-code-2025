@@ -13,7 +13,7 @@ export default function partB(): void {
       const [x, y, z] = line.split(",").map((num) => Number(num));
       return { x, y, z };
     });
-  const euclieanDistance = (from: Point, to: Point): number => {
+  const euclideanDistance = (from: Point, to: Point): number => {
     return Math.sqrt(
       (from.x - to.x) ** 2 + (from.y - to.y) ** 2 + (from.z - to.z) ** 2
     );
@@ -31,8 +31,8 @@ export default function partB(): void {
     to: Point;
     distance: number;
   }) => {
-    let indFrom: number[] = [];
-    let indTo: number[] = [];
+    let indFrom: number | null = null;
+    let indTo: number | null = null;
     if (circuits.length === 0) {
       circuits.push([newCircuit.from, newCircuit.to]);
       return;
@@ -45,35 +45,35 @@ export default function partB(): void {
         equalPoints(point, newCircuit.to)
       );
       if (fromIndex >= 0 && toIndex >= 0) {
-        // theyre in teh same circuit already, so skip
+        // theyre in the same circuit already, so skip
         return;
       }
       if (fromIndex === -1 && toIndex >= 0) {
-        indTo = [i, toIndex];
+        indTo = i;
       }
 
       if (toIndex === -1 && fromIndex >= 0) {
-        indFrom = [i, fromIndex];
+        indFrom = i;
       }
     }
-    if (indTo.length > 0 && indFrom.length === 0) {
-      circuits[indTo[0]].push(newCircuit.from);
+    if (indTo !== null && indFrom === null) {
+      circuits[indTo].push(newCircuit.from);
       return;
     }
-    if (indFrom.length > 0 && indTo.length === 0) {
-      circuits[indFrom[0]].push(newCircuit.to);
+    if (indFrom !== null && indTo === null) {
+      circuits[indFrom].push(newCircuit.to);
       return;
     }
     // if both are enpty
     // add new circuit
-    if (indTo.length === 0 && indFrom.length === 0) {
+    if (indTo === null && indFrom === null) {
       circuits.push([newCircuit.from, newCircuit.to]);
       return;
     }
     // if both have entries, merge circuits
-    if (indTo.length > 0 && indFrom.length > 0) {
-      circuits[indFrom[0]].push(...circuits[indTo[0]]);
-      circuits.splice(indTo[0], 1);
+    if (indTo !== null && indFrom !== null) {
+      circuits[indFrom].push(...circuits[indTo]);
+      circuits.splice(indTo, 1);
     }
   };
 
@@ -82,7 +82,7 @@ export default function partB(): void {
       distances.push({
         from: input[i],
         to: input[j],
-        distance: euclieanDistance(input[i], input[j]),
+        distance: euclideanDistance(input[i], input[j]),
       });
     }
   }
