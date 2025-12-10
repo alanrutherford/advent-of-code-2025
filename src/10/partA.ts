@@ -70,7 +70,7 @@ export default function partA(): void {
     const openList: node[] = [];
     openList.push({ target, buttons, result, steps });
     let index = 0;
-
+    let visited = new Set();
     while (openList.length > 0) {
       let currentNode = openList.shift();
       let childrenNodes: node[] = [];
@@ -84,12 +84,15 @@ export default function partA(): void {
         if (nextRes === currentNode.target) {
           return currentNode.steps + 1;
         } else {
-          childrenNodes.push({
-            target,
-            buttons,
-            result: nextRes,
-            steps: currentNode.steps + 1,
-          });
+          if (!visited.has(nextRes)) {
+            childrenNodes.push({
+              target,
+              buttons,
+              result: nextRes,
+              steps: currentNode.steps + 1,
+            });
+            visited.add(nextRes);
+          }
         }
       }
       openList.push(...childrenNodes);
@@ -101,7 +104,6 @@ export default function partA(): void {
   let sum = 0;
   let index = 0;
   for (const machine of input) {
-    console.log(machine);
     sum += xor(machine.init, machine.buttons, 0, 0);
     index++;
   }
