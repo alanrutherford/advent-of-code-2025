@@ -10,7 +10,10 @@
     "start": "sh -c 'tsx ./src/${0}/index.ts'",
     "make": "sh -c 'cp -r src/template src/${0}'"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mathjs": "^15.1.0",
+    "yalps": "^0.6.3"
+  },
   "devDependencies": {
     "@types/node": "^24.10.1",
     "tsx": "^4.21.0",
