@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc",
     "start": "sh -c 'tsx ./src/${0}/index.ts'",
-    "make": "sh -c 'cp -r src/template src/${0}'"
+    "make": "sh -c 'cp -r src/template src/${0}'",
+    "runner": "tsx ./src/runner.ts"
   },
   "dependencies": {
     "mathjs": "^15.1.0",
